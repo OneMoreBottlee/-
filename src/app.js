@@ -1,4 +1,7 @@
-require('./styles.css')
+// require('./styles.css')
+const saveBtn = document.getElementById("save");
+const textInput = document.getElementById("text");
+const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const returnBtn = document.getElementById("return-btn");
 const eraseBtn = document.getElementById("erase-btn");
@@ -14,6 +17,7 @@ const CANVAS_HEIGHT = 800;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap = "round";
 
 let isPainting = false;
 let isFilling = false;
@@ -75,12 +79,43 @@ function onReturnClick() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
-function onEraserCLick(){
-    ctx.strokeStyle = filledColor;
-    isFilling = false;
-    modeBtn.innerText = "Fill";
+function onEraserCLick() {
+  ctx.strokeStyle = filledColor;
+  isFilling = false;
+  modeBtn.innerText = "Fill";
 }
 
+function onFileChange(event) {
+  const file = event.target.files[0];
+  const url = URL.createObjectURL(file);
+  const image = new Image();
+  image.src = url;
+  image.onload = function () {
+    ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    fileInput.value = null;
+  };
+}
+
+function onDoubleClick(event) {
+  const text = textInput.value;
+  if (text !== "") {
+    ctx.save(); // 현재 상태 저장
+    ctx.lineWidth = 1;
+    ctx.font = "68px serif";
+    ctx.fillText(text, event.offsetX, event.offsetY);
+    ctx.restore(); // 저장된 상태 불러오기
+  }
+}
+
+function onSaveClick() {
+  const url = canvas.toDataURL();
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "myDrawing.png";
+  a.click();
+}
+
+canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -92,13 +127,13 @@ colorOption.forEach((color) => color.addEventListener("click", onColorClick));
 modeBtn.addEventListener("click", onModeClick);
 returnBtn.addEventListener("click", onReturnClick);
 eraseBtn.addEventListener("click", onEraserCLick);
+fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
 
-
-
-const canvas2 = document.querySelector("#canvas2");
-const ctx2 = canvas2.getContext("2d");
-canvas2.width = 800;
-canvas2.height = 800;
+// const canvas2 = document.querySelector("#canvas2");
+// const ctx2 = canvas2.getContext("2d");
+// canvas2.width = 800;
+// canvas2.height = 800;
 // // 마우스 움직일때마다 선긋기
 // const colors = [
 //     "#ff3838",
