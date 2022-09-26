@@ -1,3 +1,4 @@
+require('./styles.css')
 const modeBtn = document.getElementById("mode-btn");
 const returnBtn = document.getElementById("return-btn");
 const eraseBtn = document.getElementById("erase-btn");
