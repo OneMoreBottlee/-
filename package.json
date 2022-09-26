@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "deploy": "gh-pages -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,9 +18,10 @@
   "bugs": {
     "url": "https://github.com/OneMoreBottlee/drawing-app/issues"
   },
-  "homepage": "https://github.com/OneMoreBottlee/drawing-app#readme",
+  "homepage": "https://github.com/OneMoreBottlee/drawing-app",
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
