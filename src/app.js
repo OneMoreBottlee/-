@@ -1,4 +1,4 @@
-// require('./styles.css')
+require('./styles.css')
 const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
